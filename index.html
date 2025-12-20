@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Priya Sharma — Portfolio</title>
+  <meta name="description" content="Priya Sharma — Data Science & Machine Learning Portfolio" />
+  <style>
+    /* ====== Reset & base ====== */
+    :root{
+      --bg:#0f1724; /* navy-ish */
+      --card: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.06);
+      --accent1:#0ea5a4; /* teal */
+      --accent2:#0b74ff;
+      --muted: rgba(255,255,255,0.75);
+      --glass-border: rgba(255,255,255,0.06);
+      --glass-blur: 8px;
+      --max-w:1100px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background: linear-gradient(180deg, #071226 0%, #071a2a 60%);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max-w);margin:0 auto;padding:28px}
+
+    /* ====== Intro loader (full page) ====== */
+    .intro-loader{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;background:linear-gradient(135deg, rgba(4,6,11,1) 0%, rgba(6,12,22,1) 100%);
+      transition:opacity 600ms ease, visibility 600ms;
+    }
+    .intro-loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .logo-wrap{display:flex;flex-direction:column;align-items:center;gap:20px}
+    .logo-mark{
+      width:110px;height:110px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 10px 30px rgba(0,0,0,0.5);
+      transform:scale(1);
+      animation:logo-breathe 2000ms infinite;
+    }
+    @keyframes logo-breathe{0%{transform:scale(0.98)}50%{transform:scale(1.03)}100%{transform:scale(0.98)}}
+    .loader-sub{opacity:0.85}
+
+    /* ====== Header & nav ====== */
+    header{position:sticky;top:0;backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(7,11,18,0.45), rgba(7,11,18,0.15));border-bottom:1px solid rgba(255,255,255,0.02);z-index:50}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .mark{width:48px;height:48;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav ul{display:flex;gap:16px;align-items:center}
+    nav a{padding:8px 12px;border-radius:8px;color:var(--muted);font-weight:600}
+    nav a:hover{background:rgba(255,255,255,0.03);color:white}
+
+    /* ====== Hero ====== */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;padding:48px 0}
+    .hero-left{padding-right:6px}
+    .eyebrow{font-weight:700;color:var(--accent1);display:inline-block;margin-bottom:14px}
+    h1{font-size:38px;line-height:1.02;margin-bottom:12px}
+    .typing{display:inline-block;color:var(--accent2);font-weight:700}
+    p.lead{color:rgba(230,238,248,0.8);margin-bottom:18px}
+    .cta{display:flex;gap:12px;margin-top:18px}
+    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#001;margin-weight:700;font-weight:700}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* ====== Card (profile) ====== */
+    .card{background:var(--card);border-radius:14px;padding:18px;border:1px solid var(--glass-border);backdrop-filter:blur(var(--glass-blur))}
+    .profile-img{width:100%;height:220px;border-radius:10px;background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));display:flex;align-items:center;justify-content:center;font-size:18px;color:rgba(255,255,255,0.6)}
+    .skills{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .skill{display:flex;justify-content:space-between;gap:12px}
+    .skill .bar{flex:1;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+    .skill .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:60%}
+
+    /* ====== Projects grid ====== */
+    .section{margin-top:30px}
+    .section h2{font-size:20px;margin-bottom:14px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .project{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    .project h3{font-size:16px;margin-bottom:8px}
+    .project p{font-size:14px;color:rgba(230,238,248,0.8)}
+    .project .links{margin-top:10px;display:flex;gap:8px}
+
+    /* ====== Certifications & timeline ====== */
+    .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .cert{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);font-size:14px}
+
+    /* ====== Contact ====== */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    form{display:flex;flex-direction:column;gap:8px}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:var(--muted)}
+
+    footer{margin-top:40px;padding:24px 0;color:rgba(255,255,255,0.6)}
+
+    /* ====== Responsive ====== */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr}
+      .cert-grid{grid-template-columns:repeat(2,1fr)}
+      .contact-grid{grid-template-columns:1fr}
+    }
+
+    /* ====== Entrance transitions (fade + slide) ====== */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity 700ms ease, transform 700ms ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+
+    /* ====== Typing animation ====== */
+    .typing[data-text]:after{
+      content:'';display:inline-block;width:2px;height:1.05em;background:var(--accent2);margin-left:8px;vertical-align:middle;animation:blink 900ms steps(1) infinite;
+    }
+    @keyframes blink{50%{opacity:0}}
+
+    /* subtle focus */
+    .muted{color:rgba(230,238,248,0.6)}
+  </style>
+</head>
+<body>
+
+  <!-- Intro loader (logo -> fade) -->
+  <div class="intro-loader" id="intro">
+    <div class="logo-wrap">
+      <div class="logo-mark">PS</div>
+      <div class="loader-sub muted">Priya Sharma — Data Scientist</div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="mark">PS</div>
+        <div>
+          <div style="font-weight:800">Priya Sharma</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6)">Data Science • Machine Learning</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certs">Certifications</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="secondary" href="#resume">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+
+    <section class="hero">
+      <div class="hero-left reveal" data-reveal>
+        <div class="eyebrow">Hi — I'm Priya</div>
+        <h1>
+          Passionate Data Scientist
+          <span class="typing" id="typing" data-text="Machine Learning Engineer • Data Analyst • ML Enthusiast"></span>
+        </h1>
+        <p class="lead">I convert raw data into meaningful insights using Python, ML, and strong statistical methods. I build models, visualizations, and end-to-end pipelines that help teams make data-informed decisions.</p>
+        <div class="cta">
+          <a class="btn" href="#projects">See Projects</a>
+          <a class="btn secondary" href="#contact">Hire / Contact</a>
+        </div>
+
+        <div class="section" style="margin-top:22px">
+          <h2>Skills</h2>
+          <div class="skills">
+            <div class="skill"><div class="muted">Python</div><div style="width:14%"> </div><div class="bar"><i style="width:85%"></i></div></div>
+            <div class="skill"><div class="muted">Machine Learning</div><div style="width:14%"> </div><div class="bar"><i style="width:78%"></i></div></div>
+            <div class="skill"><div class="muted">Data Visualization</div><div style="width:14%"> </div><div class="bar"><i style="width:75%"></i></div></div>
+            <div class="skill"><div class="muted">SQL & Data Wrangling</div><div style="width:14%"> </div><div class="bar"><i style="width:70%"></i></div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="card reveal" data-reveal>
+        <div class="profile-img" style="width:100%;height:300px"><img src="p1.jpg" height="500" width="360" alt="Profile picture" style="width:100%;height:100%;object-fit:cover;border-radius:10px"/><br/><small class="muted"></small></div>
+        <div style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:700">Contact</div><div class="muted">Sonipat, Haryana</div></div>
+          <div style="margin-top:8px;font-size:14px;color:rgba(230,238,248,0.85)">+91 7206023407<br/>priyasharamvirgo.5126@gmail.com</div>
+          <div style="display:flex;gap:10px;margin-top:12px"><a href="https://github.com/Priya-S5" target="_blank" class="muted">GitHub</a><a href="https://www.linkedin.com/in/PriyaSharmaJamdagni/" target="_blank" class="muted">LinkedIn</a></div>
+          <div style="margin-top:10px;display:flex;gap:8px"><a class="btn" href="Priya Sharma_resume.docx">Download Resume</a></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <div class="grid">
+
+        <article class="project reveal" data-reveal>
+          <h2>Quantum Computing Research Project</h2>
+          <h3>Noise and Error Modeling in Quantum Circuits</h3>
+          <p>Performed noise and error modeling in quantum circuits using Qiskit and Python. Analyzed quantum gate errors, noise models, and error mitigation techniques.</p>
+          <div class="links"><a href=" https://priya-s5.github.io/Noise-and-Error-Modeling-in-Quantum-Circuits.github.io-/" target="_blank">Project repo</a></div>
+        </article>
+
+        <article class="project reveal" data-reveal>
+          <h3>NHANES Data Analysis</h3>
+          <p>Exploratory data analysis on body measurement data — preprocessing, statistical analysis, visualization (Matplotlib).</p>
+          <div class="links"><a href="https://github.com/Priya-S5/NHANES-Data-Analysis" target="_blank">GitHub</a></div>
+        </article>
+
+        <article class="project reveal" data-reveal>
+          <h3>Semiconductor Yield Prediction</h3>
+          <p>Classification pipeline with Random Forest, SVM — handled class imbalance with SMOTE and performed feature engineering.</p>
+          <div class="links"><a href="https://github.com/Priya-S5/Semiconductor-Yield-Prediction" target="_blank">GitHub</a></div>
+        </article>
+
+        <article class="project reveal" data-reveal>
+          <h3>Cardiovascular Disease Prediction</h3>
+          <p>ML pipeline achieving 92% accuracy with Random Forest; EDA, feature scaling, cross-validation and hyperparameter tuning.</p>
+          <div class="links"><a href="https://github.com/Priya-S5/Cardiovascular-Disease-Prediction" target="_blank">GitHub</a></div>
+        </article>
+
+        <article class="project reveal" data-reveal>
+          <h3>Spotify Songs’ Genre Segmentation (In progress)</h3>
+          <p>Clustering audio features to segment songs and prototype a recommendation engine (KMeans, PCA, t-SNE).</p>
+          <div class="links"><a href="https://github.com/Priya-S5/Spotify-Music" target="_blank">GitHub</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certs" class="section">
+      <h2>Certifications & Awards</h2>
+      <div class="cert-grid">
+        <div class="cert reveal" data-reveal>BE10X Webinars on AI & ChatGPT (2024)</div>
+        <div class="cert reveal" data-reveal>Data Science Intern — CORIZO (2025)</div>
+        <div class="cert reveal" data-reveal>NATIONAL SEMINAR — PPT on AI-Powered Resource Optimization (2025)</div>
+        <div class="cert reveal" data-reveal>Web Development Bootcamp — GVM Girls College (2025)</div>
+        <div class="cert reveal" data-reveal>Hackathon Participation (2024)</div>
+        <div class="cert reveal" data-reveal>5G Workshop by Jio Team (2023)</div>
+      </div>
+    </section>
+
+    <!-- Contact & Resume -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="contact-grid">
+        <div class="card reveal" data-reveal>
+          <h3>Get in touch</h3>
+            <p class="muted">I'm open to entry-level and full-time roles in Data Science and ML. Reach out via phone, email, or LinkedIn.</p>
+          <div style="margin-top:12px">
+            <div><strong>Phone:</strong> +91 7206023407</div>
+            <div><strong>Email:</strong> priyasharamvirgo.5126@gmail.com</div>
+            <div style="margin-top:8px"><a href="https://www.linkedin.com/in/PriyaSharmaJamdagni/" target="_blank">LinkedIn</a> • <a href="https://github.com/Priya-S5" target="_blank">GitHub</a></div>
+          </div>
+        </div>
+
+        <form class="card reveal" data-reveal onsubmit="return handleForm(event)">
+          <label class="muted">Your name<input type="text" id="name" placeholder="Your name" required></label>
+          <label class="muted">Email<input type="email" id="email" placeholder="Your email" required></label>
+          <label class="muted">Message<textarea id="message" rows="5" placeholder="Message..." required></textarea></label>
+          <div style="display:flex;gap:8px;margin-top:8px"><button class="btn" type="submit">Send</button><button class="btn secondary" type="reset">Reset</button></div>
+        </form>
+      </div>
+
+      <div id="resume" class="section" style="margin-top:20px">
+        <h2>Resume</h2>
+        <div class="card">
+          <p class="muted">Click below to download or view my resume.</p>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <a class="btn" href="Priya Sharma_resume.docx" download>Download Resume</a>
+            <a class="btn secondary" onclick="open.docs('Priya Sharma_resume.docx')">Open in new tab</a>
+          </div>
+        </div>
+      </div> 
+
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>© Priya Sharma — <span class="muted">Data Science & ML</span></div>
+        <div class="muted">Built with ❤️ • GitHub: <a href="https://github.com/Priya-S5" target="_blank">Priya-S5</a></div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // ====== Intro loader (logo -> fade) ======
+    window.addEventListener('load',()=>{
+      const intro = document.getElementById('intro');
+      setTimeout(()=>{intro.classList.add('hidden');},900); // brief pause then fade
+
+      // reveal elements
+      setTimeout(()=>{
+        document.querySelectorAll('[data-reveal]').forEach((el,i)=>{
+          setTimeout(()=>el.classList.add('show'), 120*i + 200);
+        });
+      },1200);
+
+      // start typing after loader hides
+      setTimeout(startTyping,1100);
+    });
+
+    // ====== Typing animation (dynamic) ======
+    function startTyping(){
+      const el = document.getElementById('typing');
+      if(!el) return;
+      const text = el.getAttribute('data-text') || '';
+      const words = text.split(' • ');
+      let wi=0, ci=0, deleting=false;
+      el.textContent='';
+      const step = ()=>{
+        const word = words[wi];
+        if(!deleting){
+          el.textContent = word.slice(0,ci+1);
+          ci++;
+          if(ci===word.length){ // pause then delete
+            deleting=true;setTimeout(step,900);
+          } else setTimeout(step,90);
+        } else {
+          el.textContent = word.slice(0,ci-1);
+          ci--;
+          if(ci===0){deleting=false;wi=(wi+1)%words.length;setTimeout(step,200);} else setTimeout(step,60);
+        }
+      };
+      step();
+    }
+
+    // ====== Simple contact form handler (client-only) ======
+    function handleForm(e){
+      e.preventDefault();
+      const name=document.getElementById('name').value;
+      const email=document.getElementById('email').value;
+      const message=document.getElementById('message').value;
+      alert('Thanks '+name+" — I'll get back to you soon (demo contact).\nMessage preview:\n"+message);
+      e.target.reset();
+      return false;
+    }
+
+    // ====== Smooth scroll for nav links ======
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+  </script>
+</body>
+</html>
